@@ -1,0 +1,46 @@
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - .:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    networks:
+      - booking-network
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    networks:
+      - booking-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: booking-app
+    networks:
+      - booking-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - booking-network
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+
+networks:
+  booking-network:
+    driver: bridge

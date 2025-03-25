@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Hotel extends Model
@@ -12,23 +13,13 @@ class Hotel extends Model
         'location',
     ];
 
-    public function reservations(): HasMany
+    public function owner(): BelongsTo
     {
-        return $this->hasMany(Reserve::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function hotels(): HasMany
+    public function rooms(): HasMany
     {
-        return $this->hasMany(Hotel::class);
-    }
-
-    public function payments(): HasMany
-    {
-        return $this->hasMany(Payment::class);
-    }
-
-    public function reviews(): HasMany
-    {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(Room::class);
     }
 }

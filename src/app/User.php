@@ -2,16 +2,20 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authentication;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+class User extends Authentication
 {
+    use HasApiTokens;
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
+
+    protected $hidden = ['password'];
 
     public function reservations(): HasMany
     {

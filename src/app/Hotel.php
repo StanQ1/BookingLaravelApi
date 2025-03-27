@@ -11,7 +11,10 @@ class Hotel extends Model
     protected $fillable = [
         'name',
         'location',
+        'owner_id',
     ];
+
+    protected $hidden = ['owner_id', 'created_at', 'updated_at'];
 
     public function owner(): BelongsTo
     {

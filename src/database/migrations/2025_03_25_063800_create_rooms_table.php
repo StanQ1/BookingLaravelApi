@@ -1,5 +1,6 @@
 <?php
 
+use App\RoomStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,10 +18,8 @@ return new class extends Migration
             $table->string('room_number');
             $table->integer('capacity');
             $table->float('price');
-            $table->enum('status', [
-                'unreserved',
-                'reserved',
-            ])->default('unreserved');
+            $table->enum('status', array_column(RoomStatus::cases(), 'value')
+            )->default(RoomStatus::UNRESERVED->value);
             $table->timestamps();
         });
     }

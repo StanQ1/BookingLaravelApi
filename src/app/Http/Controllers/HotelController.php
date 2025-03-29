@@ -78,4 +78,20 @@ class HotelController extends Controller
 
         return response()->json($hotel->delete());
     }
+
+    public function room(string $hotelId, string $roomNumber): JsonResponse
+    {
+        return response()->json(Hotel::findOrFail($hotelId)->rooms()->where('room_number', $roomNumber)->get());
+    }
+
+    public function rooms(string $hotelId): JsonResponse
+    {
+        $hotel = Hotel::findOrFail($hotelId);
+
+        if (!$hotel) {
+            return response()->json(['error' => 'Hotel not found'], 404);
+        }
+
+        return response()->json($hotel->rooms);
+    }
 }

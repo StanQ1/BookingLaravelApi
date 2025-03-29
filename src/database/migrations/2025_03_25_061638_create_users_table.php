@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('role', array_column(
                 UserRoles::cases(),
                 'value')
-            )->default(UserRoles::CUSTOMER);
+            )->default(UserRoles::CUSTOMER->value);
             $table->timestamps();
         });
     }

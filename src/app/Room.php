@@ -8,9 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Room extends Model
 {
     protected $fillable = [
-        'number',
+        'hotel_id',
+        'room_number',
         'capacity',
         'price',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 
     public function hotel(): BelongsTo
